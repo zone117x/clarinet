@@ -168,12 +168,12 @@ jobs:
             linker_package:
             cc: ""
             architecture: x64
-          # - os: macos-latest
-          #   platform: darwin
-          #   target: aarch64-apple-darwin
-          #   linker_package:
-          #   cc: ""
-          #   architecture: arm64
+          - os: macos-latest
+            platform: darwin
+            target: aarch64-apple-darwin
+            linker_package:
+            cc: ""
+            architecture: arm64
 
     steps:
       - name: Configure git to use LF (Windows)
