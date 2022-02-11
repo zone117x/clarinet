@@ -250,7 +250,7 @@ jobs:
           tar zxvf openssl.tar.gz -C . --strip-components 1
           CC="musl-gcc -fPIE -pie" ./Configure no-shared no-async no-engine -DOPENSSL_NO_SECURE_MEMORY --prefix=/musl --openssldir=/musl/ssl linux-x86_64
           make -j$(nproc)
-          make install
+          sudo make install
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
           echo "OPENSSL_STATIC=true" >> $GITHUB_ENV
           echo "OPENSSL_DIR=/musl" >> $GITHUB_ENV
