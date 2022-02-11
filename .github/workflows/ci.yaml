@@ -248,8 +248,7 @@ jobs:
           echo "CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=musl-gcc" >> $GITHUB_ENV
           wget -O openssl.tar.gz https://github.com/openssl/openssl/archive/OpenSSL_1_1_1m.tar.gz
           tar zxvf openssl.tar.gz -C . --strip-components 1
-          CC="musl-gcc -fPIE -pie" ./Configure no-shared no-async --prefix=/musl --openssldir=/musl/ssl linux-x86_64
-          make depend
+          CC="musl-gcc -fPIE -pie" ./Configure no-shared no-async no-engine -DOPENSSL_NO_SECURE_MEMORY --prefix=/musl --openssldir=/musl/ssl linux-x86_64
           make -j$(nproc)
           make install
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
