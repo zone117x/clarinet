@@ -122,6 +122,9 @@ jobs:
     container:
       image: rust:alpine3.15
     steps:
+      - name: install alpine-sdk
+        run: apk add alpine-sdk
+
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
