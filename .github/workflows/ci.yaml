@@ -246,10 +246,8 @@ jobs:
           echo "CC=musl-gcc" >> $GITHUB_ENV
           echo "CC_x86_64_unknown_linux_musl=musl-gcc" >> $GITHUB_ENV
           echo "CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=musl-gcc" >> $GITHUB_ENV
-          mkdir
           wget -O openssl.tar.gz https://github.com/openssl/openssl/archive/OpenSSL_1_1_1m.tar.gz
-          tar zxvf openssl.tar.gz
-          cd openssl.tar.gz/
+          tar zxvf openssl.tar.gz -C . --strip-components 1
           CC="musl-gcc -fPIE -pie" ./Configure no-shared no-async --prefix=/musl --openssldir=/musl/ssl linux-x86_64
           make depend
           make -j$(nproc)
