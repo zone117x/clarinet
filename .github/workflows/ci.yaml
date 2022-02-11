@@ -137,7 +137,7 @@ jobs:
             linker_package:
             cc: ""
             architecture: x64
-            libc: libc
+            libc: glibc
           # To be uncommented later when adding new distros
           # - os: ubuntu-latest
           #   platform: linux
@@ -423,6 +423,7 @@ jobs:
 
   build:
     name: Docker build
+    if: ${{ false }}
     runs-on: ubuntu-latest
     needs: pre_run
     outputs:
