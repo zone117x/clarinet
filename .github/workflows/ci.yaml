@@ -117,10 +117,31 @@ jobs:
           name: clarinet
           verbose: true
 
+  musl_build_test:
+    runs-on: ubuntu-latest
+    container:
+      image: rust:alpine3.15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: x86_64-unknown-linux-musl
+          profile: minimal
+          override: true
+
+      - name: Build - Cargo
+        run: cargo build --release --features=telemetry --locked --target x86_64-unknown-linux-musl
+
   dist:
     name: Build distributions
     runs-on: ${{ matrix.os }}
-    needs: pre_run
+    needs: [pre_run, musl_build_test]
     # Related upstream issue:
     # https://github.com/nagisa/rust_libloading/issues/61#issuecomment-607941377
     #
@@ -151,13 +172,13 @@ jobs:
           #   linker_package: gcc-arm-linux-gnueabihf
           #   cc: arm-linux-gnueabihf-gcc
           #   architecture: armv7l
-          - os: ubuntu-latest
-            platform: linux
-            target: x86_64-unknown-linux-musl
-            linker_package:
-            cc: ""
-            architecture: x64
-            libc: musl
+          # - os: ubuntu-latest
+          #   platform: linux
+          #   target: x86_64-unknown-linux-musl
+          #   linker_package:
+          #   cc: ""
+          #   architecture: x64
+          #   libc: musl
           - os: windows-latest
             platform: windows
             target: x86_64-pc-windows-msvc
