@@ -120,8 +120,6 @@ jobs:
   dist:
     name: Build distributions
     runs-on: ${{ matrix.os }}
-    container:
-      image: ${{ matrix.container }}
     needs: pre_run
     # Related upstream issue:
     # https://github.com/nagisa/rust_libloading/issues/61#issuecomment-607941377
@@ -160,7 +158,6 @@ jobs:
             cc: ""
             architecture: x64
             libc: musl
-            container: "rust:alpine3.15"
           - os: windows-latest
             platform: windows
             target: x86_64-pc-windows-msvc
@@ -243,7 +240,11 @@ jobs:
       - name: Configure linux-x64-musl compile config
         if: matrix.target == 'x86_64-unknown-linux-musl'
         run: |
-          apk add alpine-sdk openssl-dev nodejs npm bash
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
+          echo "CC=musl-gcc" >> $GITHUB_ENV
+          echo "CC_x86_64_unknown_linux_musl=musl-gcc" >> $GITHUB_ENV
+          echo "CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=musl-gcc" >> $GITHUB_ENV
           echo "RUSTFLAGS="-C target-feature=-crt-static"" >> $GITHUB_ENV
 
       - name: Configure artifact names (libc)
