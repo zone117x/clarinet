@@ -154,7 +154,6 @@ jobs:
           npm run build-${{ env.SHORT_TARGET_NAME }}
 
       - name: Compress node artifact
-        shell: bash
         run: tar -C node-bindings -zcvf stacks-devnet-js-${{ env.PRE_GYP_TARGET_NAME }}.tar.gz native/index.node
 
       # Separate uploads to prevent paths from being preserved
