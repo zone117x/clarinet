@@ -156,12 +156,11 @@ jobs:
       - name: Compress node artifact
         run: tar -C node-bindings -zcvf stacks-devnet-js-${{ env.PRE_GYP_TARGET_NAME }}.tar.gz native/index.node
 
-      # Separate uploads to prevent paths from being preserved
-      - name: Upload cargo artifacts
+      - name: Upload node artifact
         uses: actions/upload-artifact@v2
         with:
-          name: clarinet-${{ env.SHORT_TARGET_NAME }}
-          path: clarinet-${{ env.SHORT_TARGET_NAME }}.tar.gz
+          name: stacks-devnet-js-${{ env.PRE_GYP_TARGET_NAME }}
+          path: stacks-devnet-js-${{ env.PRE_GYP_TARGET_NAME }}.tar.gz
 
   musl_build_test2:
     if: ${{ false }}
