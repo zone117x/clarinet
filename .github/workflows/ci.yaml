@@ -141,7 +141,6 @@ jobs:
           override: true
 
       - name: Configure artifact names (libc)
-        if: ${{ matrix.libc }}
         run: |
           echo "SHORT_TARGET_NAME=linux-x64-musl" >> $GITHUB_ENV
           echo "PRE_GYP_TARGET_NAME=linux-x64-musl" >> $GITHUB_ENV
@@ -152,18 +151,12 @@ jobs:
           npm install --ignore-scripts
           npm run build-${{ env.SHORT_TARGET_NAME }}
 
-      - name: Build - Cargo
-        env:
-          V8_FROM_SOURCE: "true"
-        run: cargo build --release --features=telemetry --locked --target x86_64-unknown-linux-musl
-
       - name: Compress node artifact
         shell: bash
         run: tar -C node-bindings -zcvf stacks-devnet-js-${{ env.PRE_GYP_TARGET_NAME }}.tar.gz native/index.node
 
       # Separate uploads to prevent paths from being preserved
-      - name: Upload cargo artifacts (Not Windows)
-        if: matrix.os != 'windows-latest'
+      - name: Upload cargo artifacts
         uses: actions/upload-artifact@v2
         with:
           name: clarinet-${{ env.SHORT_TARGET_NAME }}
