@@ -140,7 +140,6 @@ jobs:
             cc: ""
             architecture: x64
             libc: glibc
-            container: ""
           # - os: ubuntu-latest
           #   platform: linux
           #   target: aarch64-unknown-linux-gnu
@@ -168,21 +167,18 @@ jobs:
             linker_package: ""
             cc: ""
             architecture: x64
-            container: ""
           - os: macos-latest
             platform: darwin
             target: x86_64-apple-darwin
             linker_package: ""
             cc: ""
             architecture: x64
-            container: ""
           - os: macos-latest
             platform: darwin
             target: aarch64-apple-darwin
             linker_package: ""
             cc: ""
             architecture: arm64
-            container: ""
 
     steps:
       - name: Configure git to use LF (Windows)
