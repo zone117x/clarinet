@@ -244,7 +244,7 @@ jobs:
           echo "CC=musl-gcc" >> $GITHUB_ENV
           echo "CC_x86_64_unknown_linux_musl=musl-gcc" >> $GITHUB_ENV
           echo "CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=musl-gcc" >> $GITHUB_ENV
-        #  echo "RUSTFLAGS="-C target-feature=-crt-static"" >> $GITHUB_ENV
+          echo "RUSTFLAGS="-C target-feature=-crt-static"" >> $GITHUB_ENV
 
       - name: Configure artifact names (libc)
         if: ${{ matrix.libc }}
