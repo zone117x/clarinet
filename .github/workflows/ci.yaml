@@ -147,6 +147,8 @@ jobs:
 
       - name: Build - Node
         working-directory: node-bindings
+        env:
+          RUSTFLAGS: "-C target-feature=-crt-static"
         run: |
           npm install --ignore-scripts
           npm run build-${{ env.SHORT_TARGET_NAME }}
