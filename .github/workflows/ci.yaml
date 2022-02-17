@@ -125,7 +125,7 @@ jobs:
       image: rust:alpine3.15
     steps:
       - name: install alpine-sdk
-        run: apk add alpine-sdk openssl-dev
+        run: apk add alpine-sdk openssl-dev nodejs npm
 
       - name: Checkout repository
         uses: actions/checkout@v2
