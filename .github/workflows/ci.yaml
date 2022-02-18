@@ -38,9 +38,9 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly-2021-08-05
           profile: minimal
-          components: rustfmt
+          components: llvm-tools-preview
           override: true
 
       - name: Set Cargo file permissions
