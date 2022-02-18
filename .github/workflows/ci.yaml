@@ -289,8 +289,8 @@ jobs:
         with:
           entrypoint: /bin/sh
           args: |
-            apk add alpine-sdk openssl-dev nodejs npm git && \
-            npm install --ignore-scripts && \
+            apk add alpine-sdk openssl-dev nodejs npm git &&
+            npm install --ignore-scripts &&
             npm run build-${{ env.SHORT_TARGET_NAME }}
 
       - name: Code sign bin (Windows)
