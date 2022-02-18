@@ -239,6 +239,11 @@ jobs:
       - name: Configure linux-x64-musl compile config
         if: matrix.target == 'x86_64-unknown-linux-musl'
         run: |
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
+          echo "CC=musl-gcc" >> $GITHUB_ENV
+          echo "CC_x86_64_unknown_linux_musl=musl-gcc" >> $GITHUB_ENV
+          echo "CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=musl-gcc" >> $GITHUB_ENV
           echo "RUSTFLAGS="-C target-feature=-crt-static"" >> $GITHUB_ENV
 
       - name: Configure artifact names (libc)
@@ -272,22 +277,22 @@ jobs:
         #   CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER: ${{ matrix.cc }}
 
       - name: Build - Node
-        if: matrix.target != 'x86_64-unknown-linux-musl'
+        # if: matrix.target != 'x86_64-unknown-linux-musl'
         working-directory: node-bindings
         run: |
           npm install --ignore-scripts
           npm run build-${{ env.SHORT_TARGET_NAME }}
 
-      - name: Build - Node (linux-musl)
-        if: matrix.target == 'x86_64-unknown-linux-musl'
-        uses: docker://rust:alpine3.15
-        with:
-          entrypoint: /bin/sh
-          args: -c "
-            cd node-bindings &&
-            apk add alpine-sdk nodejs npm git &&
-            npm install --ignore-scripts &&
-            npm run build-${{ env.SHORT_TARGET_NAME }}"
+      # - name: Build - Node (linux-musl)
+      #   if: matrix.target == 'x86_64-unknown-linux-musl'
+      #   uses: docker://rust:alpine3.15
+      #   with:
+      #     entrypoint: /bin/sh
+      #     args: -c "
+      #       cd node-bindings &&
+      #       apk add alpine-sdk nodejs npm git &&
+      #       npm install --ignore-scripts &&
+      #       npm run build-${{ env.SHORT_TARGET_NAME }}"
 
       - name: Code sign bin (Windows)
         if: startsWith(github.ref, 'refs/tags/v') && matrix.os == 'windows-latest'
