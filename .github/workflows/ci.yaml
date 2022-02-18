@@ -288,7 +288,10 @@ jobs:
         uses: docker://rust:alpine3.15
         with:
           entrypoint: /bin/sh
-          args: npm install --ignore-scripts && npm run build-${{ env.SHORT_TARGET_NAME }}
+          args: |
+            apk add alpine-sdk openssl-dev nodejs npm git && \
+            npm install --ignore-scripts && \
+            npm run build-${{ env.SHORT_TARGET_NAME }}
 
       - name: Code sign bin (Windows)
         if: startsWith(github.ref, 'refs/tags/v') && matrix.os == 'windows-latest'
